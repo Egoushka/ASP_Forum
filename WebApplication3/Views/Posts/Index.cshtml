@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "List of posts";
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<a asp-action="Create">Add new post</a>
+<table class="table">
+    <tr><th>Name</th><th>Text</th><th></th></tr>
+
+    @foreach (var post in ViewBag.Posts)
+    {
+        <tr>
+            <td>@post.Name</td>
+            <td>@post.Text</td>
+            <td>
+                <form asp-action="Delete" asp-route-id="@post.Id" method="post">
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@post.Id">Change</a>
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        Удалить
+                    </button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebApplication3.Models.Theme>
+    @{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@if (User.Identity.IsAuthenticated)
+{
+
+    var posts = ViewBag.Posts;
+    var user = ViewBag.User;
+
+    <p>@user.UserName</p>
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <input type="submit" value="Выход" />
+    </form>
+    <form method="post" asp-controller="Themes" asp-action="Index">
+        <input type="submit" value="User area" />
+    </form>
+    @foreach (var th in ViewBag.Themes)
+    {
+        <li>
+   
+                <h3>
+                    @th.Title
+                </h3>
+                <span style="color:red">@th.Description</span>
+                @foreach (var p in posts)
+                {
+                    if (th.Id == p.IdTheme)
+                    {
+                        <br />
+                        <h4>
+                            <span style="color:red">@p.Name</span>
+                            <br />
+                            <span style="color:red">@p.Text</span>
+                        </h4>
+                    }
+                }
+        </li>
+    }
+}
+else
+{
+    <a asp-controller="Account" asp-action="Login">Вход</a>
+    <a asp-controller="Account" asp-action="Register">Регистрация</a>
+}
